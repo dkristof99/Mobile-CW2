@@ -19,6 +19,10 @@ app.get("/", (req, res, next) => {
     res.send("Select a collection, e.g., /collection/:collectionName")
 })
 
+app.get("/collection/", (req, res, next) => {
+    res.send("Select a collection, e.g., /collection/lessons")
+})
+
 app.get("/collection/:collectionName", (req, res, next) => {
     req.collection.find({}).toArray((e, results) => {
         if (e) return next(e)
@@ -26,9 +30,10 @@ app.get("/collection/:collectionName", (req, res, next) => {
     })
 })
 
-app.get("/collection/", (req, res, next) => {
-    res.send("Select a collection, e.g., /collection/lessons")
-})
+app.use(function(req, res, next) {
+    console.log("Request method: " + req.method);
+    next();
+});
 
 //Get an object based ID
 const ObjectID = require('mongodb').ObjectID;
@@ -43,7 +48,7 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
 })
 
 //Add a new object
-app.post('collection/:collectionName', (req, res, next) => {
+app.post('/collection/:collectionName', (req, res, next) => {
     req.collection.insert(req.body, (e, results) => {
         if (e) return next(e)
         res.send(results.ops)
