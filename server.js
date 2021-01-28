@@ -30,10 +30,6 @@ app.get("/collection/", (req, res, next) => {
     res.send("Select a collection, e.g., /collection/lessons")
 })
 
-app.listen(3000, ()=> {
-    console.log("Express server is running at localhost:3000.")
-})
-
 //Get an object based ID
 const ObjectID = require('mongodb').ObjectID;
 app.get('/collection/:collectionName/:id', (req, res, next) => {
@@ -54,3 +50,5 @@ app.post('collection/:collectionName', (req, res, next) => {
     })
 })
 
+const port = process.env.PORT || 3000
+app.listen(port)
