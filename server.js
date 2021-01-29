@@ -29,20 +29,31 @@ app.get("/collection/:collectionName", (req, res, next) => {
         res.send(results)
     })
 })
-
+//Logger - middleware that outputs all requests to the server console
 app.use(function(req, res, next) {
     console.log("Request method: " + req.method);
     next();
 });
 
-//Get an object based ID
+//Get an object based on ID
 const ObjectID = require('mongodb').ObjectID;
 app.get('/collection/:collectionName/:id', (req, res, next) => {
     req.collection.findOne(
-        { id: new ObjectID(req.params.id) },
+        { _id: new ObjectID(req.params.id) },
         (e, result) => {
             if (e) return next(e)
             res.send(result)
+        }
+    )
+})
+
+//Delete an object based on ID
+app.delete('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.deleteOne(
+        { _id: new ObjectID(req.params.id) },
+        (e, result) => {
+            if (e) return next(e)
+            res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
         }
     )
 })
