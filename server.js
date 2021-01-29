@@ -22,6 +22,7 @@ app.use( function(req, res, next) {
     res.header('Access-Control-Allow-Methods', "*");
     //allow different header fields
     res.header("Access-Control-Allow-Headers", "*");
+    return next();
 });
 
 //Get the MongoDB collection name
