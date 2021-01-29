@@ -9,6 +9,19 @@ MongoClient.connect("mongodb+srv://dkristof:1234@cluster0.wkaio.mongodb.net/webs
 
 app.use(express.json())
 
+//Logger - middleware that outputs all requests to the server console
+app.use(function (req, res, next) {
+    console.log("Request method: " + req.method);
+    next();
+});
+app.use(function(req, res, next) {
+    //allow different IP address
+    res.header("Access-Control-Allow-Origin", "*");
+    //allow different header fields
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+})
+
 //Get the MongoDB collection name
 app.param("collectionName", (req, res, next, collectionName) => {
     req.collection = db.collection(collectionName)
@@ -29,11 +42,7 @@ app.get("/collection/:collectionName", (req, res, next) => {
         res.send(results)
     })
 })
-//Logger - middleware that outputs all requests to the server console
-app.use(function (req, res, next) {
-    console.log("Request method: " + req.method);
-    next();
-});
+
 
 //Get an object based on ID
 const ObjectID = require('mongodb').ObjectID;
