@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 
 //Allows cross-origin access
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', '*');
     //Allow all methods
     res.header('Access-Control-Allow-Methods', "*");
     //allow different header fields
