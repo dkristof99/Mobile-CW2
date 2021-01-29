@@ -15,16 +15,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-//Allows cross-origin access
-app.use( function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    //Allow all methods
-    res.header('Access-Control-Allow-Methods', "*");
-    //allow different header fields
-    res.header("Access-Control-Allow-Headers", "*");
-    return next()
-});
-
 //Get the MongoDB collection name
 app.param("collectionName", (req, res, next, collectionName) => {
     req.collection = db.collection(collectionName)
@@ -89,6 +79,15 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
             res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error'})
         })
 })
+
+//Allows cross-origin access
+app.use( function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    //Allow all methods
+    res.header('Access-Control-Allow-Methods', "*");
+    //allow different header fields
+    res.header("Access-Control-Allow-Headers", "*");
+});
 
 const port = process.env.PORT || 3000
 app.listen(port)
