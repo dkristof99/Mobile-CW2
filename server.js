@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 //Allows cross-origin access
 app.use((req, res, next) => {
     //list of possible origins
-    const allowedOrigins = ['http://http://127.0.0.1:5500', 'http://localhost:3000'];
+    const allowedOrigins = ['http://127.0.0.1:5500', 'http://localhost:3000'];
     const origin = req.headers.origin;
     //Check if the origin is one of the allowed origins
     if (allowedOrigins.includes(origin)) {
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     //Allow all methods
     res.header('Access-Control-Allow-Methods', "*");
     //allow different header fields
-    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.header("Access-Control-Allow-Credentials", true);
     return next();
 });
