@@ -30,7 +30,7 @@ app.get("/collection/:collectionName", (req, res, next) => {
     })
 })
 //Logger - middleware that outputs all requests to the server console
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     console.log("Request method: " + req.method);
     next();
 });
@@ -53,7 +53,7 @@ app.delete('/collection/:collectionName/:id', (req, res, next) => {
         { _id: new ObjectID(req.params.id) },
         (e, result) => {
             if (e) return next(e)
-            res.send((result.result.n === 1) ? {msg: 'success'} : {msg: 'error'})
+            res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error' })
         }
     )
 })
@@ -64,6 +64,18 @@ app.post('/collection/:collectionName', (req, res, next) => {
         if (e) return next(e)
         res.send(results.ops)
     })
+})
+
+//Update an object
+app.put('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.update(
+        {_id: new ObjectID(req.params.id)},
+        {$set: req.body},
+        {safe: true, multi:false},
+        (e, result) => {
+            if (e) return next(e);
+            res.send((result.result.n === 1) ? { msg: 'success' } : { msg: 'error'})
+        })
 })
 
 const port = process.env.PORT || 3000
