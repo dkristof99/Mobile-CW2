@@ -14,13 +14,14 @@ app.use(function (req, res, next) {
     console.log("Request method: " + req.method);
     next();
 });
+//Allows cross-origin access
 app.use(function(req, res, next) {
     //allow different IP address
     res.header("Access-Control-Allow-Origin", "*");
     //allow different header fields
     res.header("Access-Control-Allow-Headers", "*");
     next();
-})
+});
 
 //Get the MongoDB collection name
 app.param("collectionName", (req, res, next, collectionName) => {
@@ -55,6 +56,9 @@ app.get('/collection/:collectionName/:id', (req, res, next) => {
         }
     )
 })
+
+//Return lesson images
+
 
 //Delete an object based on ID
 app.delete('/collection/:collectionName/:id', (req, res, next) => {
