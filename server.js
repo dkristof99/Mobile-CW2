@@ -15,6 +15,16 @@ app.use(function (req, res, next) {
     next();
 });
 
+//Allows cross-origin access
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://mobile-cw2.herokuapp.com');
+    //Allow all methods
+    res.header('Access-Control-Allow-Methods', "*");
+    //allow different header fields
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.header("Access-Control-Allow-Credentials", true);
+    return next();
+});
 
 //Get the MongoDB collection name
 app.param("collectionName", (req, res, next, collectionName) => {
