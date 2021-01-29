@@ -14,14 +14,22 @@ app.use(function (req, res, next) {
     console.log("Request method: " + req.method);
     next();
 });
+
 //Allows cross-origin access
-app.use(function(req, res, next) {
-    //allow different IP address
-    res.setHeader("Access-Control-Allow-Origin", "*");
+app.use((req, res, next) => {
+    //list of possible origins
+    const allowedOrigins = ['http://http://127.0.0.1:5500', 'http://localhost:3000'];
+    const origin = req.headers.origin;
+    //Check if the origin is one of the allowed origins
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //Allow all methods
+    res.header('Access-Control-Allow-Methods', "*");
     //allow different header fields
-    res.setHeader("Access-Control-Allow-Headers", "*");
-    res.setHeader("Access-Control-Allow-Methods", "*");
-    next();
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Credentials", true);
+    return next();
 });
 
 //Get the MongoDB collection name
