@@ -9,6 +9,15 @@ MongoClient.connect("mongodb+srv://dkristof:1234@cluster0.wkaio.mongodb.net/webs
 
 app.use(express.json())
 
+//Allows cross-origin access
+app.use( function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    //Allow all methods
+    res.header('Access-Control-Allow-Methods', "*");
+    //allow different header fields
+    res.header("Access-Control-Allow-Headers", "*");
+});
+
 //Logger - middleware that outputs all requests to the server console
 app.use(function (req, res, next) {
     console.log("Request method: " + req.method);
@@ -80,15 +89,7 @@ app.put('/collection/:collectionName/:id', (req, res, next) => {
         })
 })
 
-//Allows cross-origin access
-app.use( function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    //Allow all methods
-    res.header('Access-Control-Allow-Methods', "*");
-    //allow different header fields
-    res.header("Access-Control-Allow-Headers", "*");
-    return next()
-});
+
 
 const port = process.env.PORT || 3000
 app.listen(port)
